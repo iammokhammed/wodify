@@ -9,7 +9,7 @@
                     <div class="owl-carousel owl-theme home-slider">
                         {% for object in object_list %}
                         <div>
-                            <a href="{% url 'blog:detail' object.id %}"
+                            <a href="{% url 'blog:view' object.id %}"
                                class="a-block d-flex align-items-center height-lg"
                                style="background-image: url('{%if object.image %}{{ object.image.url }}{%else%}{% static 'images/avatar.jpg' %}{%endif%}'); ">
                                 <div class="text half-to-full">
@@ -45,7 +45,7 @@
                         {% for object in object_list %}
 
                         <div class="col-md-6">
-                            <a href="{% url 'blog:detail' object.id %}" class="blog-entry element-animate"
+                            <a href="{% url 'blog:view' object.id %}" class="blog-entry element-animate"
                                data-animate-effect="fadeIn">
                                 <img src="{%if object.image %}{{ object.image.url }}{%else%}{% static 'images/avatar.jpg' %}{%endif%}" alt="Image placeholder">
                                 <div class="blog-content-body">
@@ -55,6 +55,7 @@
                                         <span class="mr-2">{{ object.created_date }}</span> &bullet;
                                         <span class="ml-2"><span class="fa fa-comments"></span>{{ object.comment_set.count }}</span>
                                     </div>
+                                    <span class="fa fa-eye"> {{object.view}}</span>
                                     <h2>{{ object.title }}</h2>
                                 </div>
                             </a>

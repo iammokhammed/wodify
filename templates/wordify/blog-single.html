@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row blog-entries element-animate">
             <div class="col-md-12 col-lg-8 main-content">
-                <img src="{{ articles.image.url }}" alt="Image" class="img-fluid mb-5">
+                <img src="{%if articles.image %}{{ articles.image.url }}{%else%}{% static 'images/avatar.jpg' %}{%endif%}" alt="Image" class="img-fluid mb-5">
                 <div class="post-meta">
 
                     {% if author.avatar %}
@@ -18,7 +18,7 @@
                     &bullet;
                     <span class="mr-2">{{ articles.created_date }}</span> &bullet;
                     <span class="ml-2"><span class="fa fa-comments"></span>{{ articles.comment_set.count }}</span>
-                    <span>👁 {{articles.view_set.count}}</span>
+                    <span class="fa fa-eye">{{articles.view}}</span>
                 </div>
                 <h1 class="mb-4">{{ articles.title }}</h1>
                 {% for tag in tags %}
@@ -112,7 +112,7 @@
                         <ul>
                             <li>
                                 <a href="#">
-                                    <img src="{{ last_article.image.url }}" alt="Image placeholder" class="mr-4">
+                                    <img src="{%if last_article.image %}{{ last_article.image.url }}{%else%}{% static 'images/avatar.jpg' %}{%endif%}" alt="Image placeholder" class="mr-4">
                                     <div class="text">
                                         <h4>{{ last_article.title }}</h4>
                                         <div class="post-meta">

@@ -22,20 +22,12 @@ class Article(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     image = models.ImageField(upload_to='article/', null=True, blank=True)
     description = models.TextField()
+    view = models.IntegerField(default=0)
     tags = models.ManyToManyField(Tag)
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
-
-
-class View(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    view = models.IntegerField(default=1)
-
-    def __str__(self):
-        return self.view
 
 
 class Comment(models.Model):

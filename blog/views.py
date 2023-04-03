@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from .models import Article, Category, Tag, View
+from .models import Article, Category, Tag
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from profile.models import Profile
 from .forms import CommentForm
@@ -73,12 +73,11 @@ def article_list(request):
     return render(request, 'wordify/blog.html', ctx)
 
 
-def article_view(request):
-    article = Article.objects.all()
-    # view = View.objects.all().count()
-    # view += 1
-    # View.save()
-    return redirect(reverse('blog:detail', kwargs={id: "article.id"}))
+def article_view(request, pk):
+    article = Article.objects.get(id=pk)
+    article.view += 1
+    article.save()
+    return redirect(reverse('blog:detail', kwargs={"pk": pk}))
 
 
 def article_detail(request, pk):

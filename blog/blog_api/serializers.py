@@ -19,7 +19,7 @@ class ArticlePostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ['id', 'author', 'title', 'category', 'category_name', 'tags', 'image', 'description', 'created_date']
+        fields = ['id', 'author', 'title', 'category', 'category_name', 'view', 'tags', 'image', 'description', 'created_date']
 
     # def create(self, validated_data):
     #     instance = super().create(validated_data)
@@ -48,7 +48,7 @@ class ArticleGetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ['id', 'author', 'title', 'category', 'tags', 'image', 'description', 'sub_content', 'created_date']
+        fields = ['id', 'author', 'title', 'category', 'tags', 'view', 'image', 'description', 'sub_content', 'created_date']
 
 
 class SubContentSerializer(serializers.ModelSerializer):
