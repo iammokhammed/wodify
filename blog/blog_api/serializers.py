@@ -34,11 +34,11 @@ class MineSubContentImageSerializer(serializers.ModelSerializer):
 
 
 class MineSubContentSerializer(serializers.ModelSerializer):
-    subimage = MineSubContentImageSerializer(read_only=True, many=True)
+    sub_image = MineSubContentImageSerializer(read_only=True, many=True)
 
     class Meta:
         model = SubContent
-        fields = ['id', 'content', 'article', 'subimage']
+        fields = ['id', 'content', 'article', 'sub_image']
 
 
 class ArticleGetSerializer(serializers.ModelSerializer):
@@ -51,16 +51,16 @@ class ArticleGetSerializer(serializers.ModelSerializer):
         fields = ['id', 'author', 'title', 'category', 'tags', 'view', 'image', 'description', 'sub_content', 'created_date']
 
 
-class SubContentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SubContent
-        fields = ['id', 'content', 'article']
-
-
 class SubContentImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubContentImage
         fields = ['id', 'sub_content', 'image', 'is_wide']
+
+
+class SubContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubContent
+        fields = ['id', 'content', 'article']
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -71,15 +71,11 @@ class CommentSerializer(serializers.ModelSerializer):
             "article": {"required": False}
         }
 
-    def create(self, validated_data):
-        request = self.context['request']
-        article_id = self.context['article_id']
-        author_id = request.user.profile.id
-        description = validated_data.get('description')
-        instance = Comment.objects.create(article_id=article_id, author_id=author_id, description=description)
-        return instance
-
-
-
-
+    # def create(self, validated_data):
+    #     request = self.context['request']
+    #     article_id = self.context['article_id']
+    #     author_id = request.user.profile.id
+    #     description = validated_data.get('description')
+    #     instance = Comment.objects.create(article_id=article_id, author_id=author_id, description=description)
+    #     return instance
 

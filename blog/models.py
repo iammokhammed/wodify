@@ -44,11 +44,11 @@ class Comment(models.Model):
 
 class SubContent(models.Model):
     content = models.TextField(null=True, blank=True)
-    article = models.OneToOneField(Article, on_delete=models.CASCADE)
+    article = models.OneToOneField(Article, on_delete=models.CASCADE, related_name='sub_content')
 
 
 class SubContentImage(models.Model):
-    sub_content = models.ForeignKey(SubContent, on_delete=models.CASCADE, related_name='subimage')
+    sub_content = models.ForeignKey(SubContent, on_delete=models.CASCADE, related_name='sub_image')
     image = models.ImageField()
     is_wide = models.BooleanField(default=False)
 

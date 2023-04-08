@@ -1,6 +1,7 @@
 from rest_framework import generics, permissions
 from .serializers import ArticleGetSerializer, ArticlePostSerializer, CategorySerializer, TagSerializer, \
-    SubContentSerializer, SubContentImageSerializer, CommentSerializer
+    SubContentSerializer, SubContentImageSerializer, CommentSerializer, MineSubContentSerializer, \
+    MineSubContentImageSerializer
 from ..models import Article, Category, Tag, Comment, SubContent, SubContentImage
 from .permissoin import IsAdminUserOrReadonly
 
@@ -56,7 +57,11 @@ class BlogRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 class SubContentListCreateAPIView(generics.ListCreateAPIView):
     queryset = SubContent.objects.all()
-    serializer_class = SubContentSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return SubContentSerializer
+        return MineSubContentSerializer
 
 
 class SubContentRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -82,18 +87,15 @@ class CommentListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get_queryset(self, *args, **kwargs):
-        qs = super().get_queryset()
-        article_id = self.kwargs.get('article_id')
-        q = self.request.GET.get('q')
-        if article_id:
-            qs = qs.filter(article_id=article_id)
-            if q:
-                qs = qs.filter(description__icontains=q)
-            return qs
-        return []
-
-    def get_serializer_context(self, *args, **kwargs):
-        ctx = super().get_serializer_context()
-        ctx['article_id'] = self.kwargs.get('article_id')
-        return ctx 
+    # def get_queryset(self, *args, **kwargs):
+    #     qs = super().get_queryset()
+    #     article_id = self.kwargs.get('article_id')
+    #     if article_id:
+    #         qs = qs.filter(article_id=article_id)
+    #         return qs
+    #     return []
+    #
+    # def get_serializer_context(self, *args, **kwargs):
+    #     ctx = super().get_serializer_context()
+    #     ctx['article_id'] = self.kwargs.get('article_id')
+    #     return ctx
